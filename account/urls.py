@@ -6,5 +6,6 @@ from account import views
 app_name = 'account'
 
 urlpatterns =[
-    path('', views.index, name='index'),
+    path('index/', views.index, name='index'),
+    path('index_drf/', views.index_drf, name='index_drf'),
 ]
