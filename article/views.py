@@ -44,3 +44,11 @@ def update_article(req, article_id):
         return Response(serializer.data, status=200)
 
     return Response(serializer.errors, status=400)
+
+
+@api_view(['delete'])
+def delete_article(req, article_id):
+    article = get_object_or_404(Article, pk=article_id)
+    article.delete()
+
+    return Response(status=200)
