@@ -1,4 +1,5 @@
 from django.shortcuts import get_object_or_404
+from django.utils import timezone
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from article.models import Article
@@ -47,7 +48,16 @@ def update_article(req, article_id):
 
 
 @api_view(['delete'])
-def delete_article(req, article_id):
+def soft_delete_article(req, article_id):
+    article = get_object_or_404(Article, pk=article_id)
+    article.delete_date = timezone.now()
+    article.save()
+
+    return Response(status=200)
+
+
+@api_view(['delete'])
+def destroy_article(req, article_id):
     article = get_object_or_404(Article, pk=article_id)
     article.delete()
 
