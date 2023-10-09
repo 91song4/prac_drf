@@ -1,3 +1,4 @@
+from django.shortcuts import get_object_or_404
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from article.models import Article
@@ -20,5 +21,14 @@ def create_article(req):
 def read_articles(req):
     articles = Article.objects.all().order_by('-create_date')
     serializer = ArticleSerializer(articles, many=True)
+
+    return Response(serializer.data, status=200)
+
+
+@api_view(['get'])
+def read_article(req, article_id):
+    print(article_id, type(article_id))
+    articles = get_object_or_404(Article, pk=article_id)
+    serializer = ArticleSerializer(articles)
 
     return Response(serializer.data, status=200)
