@@ -7,7 +7,7 @@ from article.serializers import ArticleSerializer
 
 @api_view(['post'])
 def create_article(req):
-    serializer = ArticleSerializer(req.data)
+    serializer = ArticleSerializer(data=req.data)
     if serializer.is_valid():
         serializer.save()
         return Response(serializer.data, status=201)
