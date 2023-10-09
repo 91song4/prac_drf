@@ -27,8 +27,20 @@ def read_articles(req):
 
 @api_view(['get'])
 def read_article(req, article_id):
-    print(article_id, type(article_id))
     articles = get_object_or_404(Article, pk=article_id)
     serializer = ArticleSerializer(articles)
 
     return Response(serializer.data, status=200)
+
+
+@api_view(['patch'])
+def update_article(req, article_id):
+    article = get_object_or_404(Article, pk=article_id)
+    serializer = ArticleSerializer(article, data=req.data, partial=True)
+
+    if serializer.is_valid():
+        serializer.save()
+
+        return Response(serializer.data, status=200)
+
+    return Response(serializer.errors, status=400)
