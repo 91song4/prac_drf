@@ -20,7 +20,8 @@ def create_article(req):
 
 @api_view(['get'])
 def read_articles(req):
-    articles = Article.objects.all().order_by('-create_date')
+    articles = Article.objects.all().filter(
+        delete_date=None).order_by('-create_date')
     serializer = ArticleSerializer(articles, many=True)
 
     return Response(serializer.data, status=200)
