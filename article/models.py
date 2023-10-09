@@ -8,3 +8,4 @@ class Article(models.Model):
     content = models.TextField()
     create_date = models.DateTimeField(auto_now_add=True)
     update_date = models.DateTimeField(auto_now=True)
+    delete_date = models.DateTimeField(default=None)
