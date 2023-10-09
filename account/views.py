@@ -11,6 +11,6 @@ def index(request):
 
 
 # DRF 방식
-@api_view()
+@api_view(['GET'])
 def index_drf(request):
     return Response({'message': 'hello world drf!!'})
