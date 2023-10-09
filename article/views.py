@@ -51,10 +51,15 @@ def update_article(req, article_id):
 @api_view(['delete'])
 def soft_delete_article(req, article_id):
     article = get_object_or_404(Article, pk=article_id)
-    article.delete_date = timezone.now()
-    article.save()
 
-    return Response(status=200)
+    if article.delete_date is None:
+        article.delete_date = timezone.now()
+        article.save()
+
+        return Response(status=200)
+
+    # 데이터가 soft delete인 상황이기 때문에 요청을 거부
+    return Response(status=403)
 
 
 @api_view(['delete'])
